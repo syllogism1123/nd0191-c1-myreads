@@ -31,7 +31,9 @@ const Book = ({book, shelf, onChangeShelf}) => {
                             <option value="read">
                                 {shelf === "read" && "✔ "}Read
                             </option>
-                            <option value="none">None</option>
+                            {book.shelf && (
+                                <option value="none">None</option>
+                            )}
                         </select>
                     </div>
                 </div>

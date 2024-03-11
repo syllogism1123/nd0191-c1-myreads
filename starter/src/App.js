@@ -46,8 +46,10 @@ function App() {
         const search = async () => {
             const res = await BooksAPI.search(query, maxResults);
             console.log(res)
-            if (res && Array.isArray(res)) {
+            if (res && !res.error) {
                 setBooks(res);
+            } else {
+                setBooks([]);
             }
         }
         search().catch(e => {
@@ -96,8 +98,13 @@ function App() {
                     <SearchBooks
                         books={books}
                         myBooks={myBooks}
-                        addBook={(book, shelf) => handleAddBook(book, shelf)}
-                        onSearch={(query, maxResults) => handleSearch(query, maxResults)}
+                        addBook={(book, shelf) =>
+                            handleAddBook(book, shelf)}
+                        onSearch={(query, maxResults) =>
+                            handleSearch(query, maxResults)}
+                        onChangeShelf={(book, shelf) => {
+                            handleChangeShelf(book, shelf)
+                        }}
                     />}>
                 </Route>
             </Routes>

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import Book from "./Book";
 
-const SearchBooks = ({books, onSearch, addBook, myBooks}) => {
+const SearchBooks = ({books, onSearch, addBook, myBooks, onChangeShelf}) => {
     const [query, setQuery] = useState("");
     let maxResults = 20;
 
@@ -21,11 +21,13 @@ const SearchBooks = ({books, onSearch, addBook, myBooks}) => {
         return (
             book.authors &&
             book.title &&
+            book.subtitle &&
             book.industryIdentifiers &&
             book.imageLinks &&
             !isBookInMyBooks
         ) && (
             book.title.toLowerCase().includes(query.toLowerCase()) ||
+            book.subtitle.toLowerCase().includes(query.toLowerCase()) ||
             book.authors.some((author) =>
                 author.toLowerCase().includes(query.toLowerCase())
             ) ||
@@ -65,11 +67,7 @@ const SearchBooks = ({books, onSearch, addBook, myBooks}) => {
                                         key={book.id}
                                         book={book}
                                         shelf={book.shelf}
-                                        onChangeShelf={() => {
-                                            alert(
-                                                "This book is already on your shelves, so you cannot change its shelf here."
-                                            );
-                                        }}
+                                        onChangeShelf={onChangeShelf}
                                     />
                                 ))}
 
